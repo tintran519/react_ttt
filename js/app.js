@@ -1,18 +1,13 @@
-class Square extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      value: null
-    };
-  }
-
-  render() {
-    return (
-      <button className="square" onClick={() => this.props.onClick()}>
-        {this.props.value}
-      </button>
-    );
-  }
+// Stateless functional components
+// A completely pure function that always produces the same component,
+// given the same arguments. The function acts as the render method in
+// classes
+function Square(props) {
+  return (
+    <button className="square" onClick={() => this.props.onClick()}>
+      {this.props.value}
+    </button>
+  );
 }
 
 class Board extends React.Component {
