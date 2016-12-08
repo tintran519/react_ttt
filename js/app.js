@@ -7,6 +7,7 @@ class Square extends React.Component {
   }
 
   render() {
+    // move state to board and send value as prop
     return (
       <button className="square" onClick={() => this.props.onClick()}>
         {this.props.value}
@@ -17,19 +18,29 @@ class Square extends React.Component {
 
 class Board extends React.Component {
   constructor() {
+    // hold state in the board to keep all important data together
     super();
     this.state = {
-      squares: Array(9).fill(null),
+      squares: Array(9).fill(null) // Start with 9 empty cells
     };
   }
 
   handleClick(i) {
+    // Its convention to name stateful container's functions
+    // "handleXYZ" while the smaller component uses "onXYZ"
+    // In this case, we're handling a click for the Square
+
+    // slice is an immutable function.
+    // now you know your raw data is always safe
     const squares = this.state.squares.slice();
+    // change to X
     squares[i] = "X";
+    // REPLACE the state
     this.setState({squares: squares})
   }
 
   renderSquare(i) {
+    // pass the value in as a prop
     return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
   }
 
