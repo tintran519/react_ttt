@@ -1,12 +1,18 @@
 class Square extends React.Component {
   constructor() {
+    // super is used to invoke parent's functions. This invocation is
+    // calling the React.Component constructor.
     super();
+    // use state to hold value
+    // Square is now a "stateful" controller
     this.state = {
       value: null
     };
   }
 
   render() {
+    // set state of button's value property when clicked
+    // display that value
     return (
       <button className="square" onClick={() => this.setState({value: 'X'})}>
         {this.state.value}
@@ -76,7 +82,7 @@ function calculateWinner(squares) {
     [1, 4, 7],
     [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6],
+    [2, 4, 6]
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
