@@ -22,7 +22,8 @@ class Board extends React.Component {
   render() {
     const status = 'Next player: X';
     // Notice how the Squares are being included. Unlike Angular, React
-    // uses single braces to include data.
+    // uses single braces to bind data. This is an early sight of the
+    // one-way data binding React is known for.
     return (
       <div>
         <div className="status">{status}</div>
