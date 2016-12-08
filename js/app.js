@@ -9,7 +9,6 @@ function Square(props) {
 class Board extends React.Component {
   constructor() {
     super();
-    // Add `xIsNext` to the Board's state.
     this.state = {
       squares: Array(9).fill(null),
       xIsNext: true
@@ -18,12 +17,16 @@ class Board extends React.Component {
 
   handleClick(i) {
     const squares = this.state.squares.slice();
-    // Change squares based on `xIsNext` boolean
+    // return out of handle click early if winner was decided or the
+    // square was filled.
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
     squares[i] = this.state.xIsNext ? "X" : "0";
     this.setState({
       squares: squares,
-      xIsNext: !this.state.xIsNext // Set boolean to opposite to
-    });                            // alternate turns
+      xIsNext: !this.state.xIsNext
+    });
   }
 
   renderSquare(i) {
@@ -32,8 +35,16 @@ class Board extends React.Component {
   }
 
   render() {
-    // change the status to reflect the turn
-    const status = `Next player: ${this.state.xIsNext ? "X" : "0"}`;
+    // reflect the winner
+    // checks for winner after each move
+    const winner = calculateWinner(this.state.squares);
+    let status;
+    // set status to winner or next move
+    if (winner) {
+      status = "Winner: " + winner;
+    } else {
+      status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+    }
     return (
       <div>
         <div className="status">{status}</div>
@@ -89,7 +100,7 @@ function calculateWinner(squares) {
     [1, 4, 7],
     [2, 5, 8],
     [0, 4, 8],
-    [2, 4, 6],
+    [2, 4, 6]
   ];
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
