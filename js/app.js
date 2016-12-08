@@ -1,11 +1,7 @@
-// Stateless functional components
-// A completely pure function that always produces the same component,
-// given the same arguments. The function acts as the render method in
-// classes
 function Square(props) {
   return (
-    <button className="square" onClick={() => this.props.onClick()}>
-      {this.props.value}
+    <button className="square" onClick={() => props.onClick()}>
+      {props.value}
     </button>
   );
 }
@@ -13,23 +9,31 @@ function Square(props) {
 class Board extends React.Component {
   constructor() {
     super();
+    // Add `xIsNext` to the Board's state.
     this.state = {
       squares: Array(9).fill(null),
+      xIsNext: true
     };
   }
 
   handleClick(i) {
     const squares = this.state.squares.slice();
-    squares[i] = "X";
-    this.setState({squares: squares})
+    // Change squares based on `xIsNext` boolean
+    squares[i] = this.state.xIsNext ? "X" : "0";
+    this.setState({
+      squares: squares,
+      xIsNext: !this.state.xIsNext // Set boolean to opposite to
+    });                            // alternate turns
   }
 
   renderSquare(i) {
-    return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
+    return <Square value={this.state.squares[i]}
+                   onClick={() => this.handleClick(i)} />;
   }
 
   render() {
-    const status = 'Next player: X';
+    // change the status to reflect the turn
+    const status = `Next player: ${this.state.xIsNext ? "X" : "0"}`;
     return (
       <div>
         <div className="status">{status}</div>
